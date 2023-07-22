@@ -1,6 +1,28 @@
 # R_programming
 Complete our programming concepts with programmes
 
+# DA LAB 1st Correlatation
+
+
+```r
+
+x <- women$height
+y <- women$weight
+# Plot with main and axis titles
+
+plot(x, y, main = "Main title", xlab = "X axis Height", ylab = "Y axis Weight", pch = 19, frame =
+       FALSE)
+
+x<- mtcars$mpg
+y<- mtcars$cyl
+
+plot(x, y, main = "Main title", xlab = "X axis mpg", ylab = "Y axis cyl", pch = 19, frame =
+       FALSE)
+
+
+```
+
+
 # DA LAB 2nd LungCapData BoxPlot
 
 
