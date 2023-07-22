@@ -1,6 +1,40 @@
 # R_programming
 Complete our programming concepts with programmes
 
+# DA LAB 2nd LungCapData BoxPlot
+
+
+```r
+
+LungCapData <- read.csv("C:/Users/Kashaf/Desktop/LungCap.csv")
+
+LungCapData <- data.frame(LungCapData)
+
+attach(LungCapData)
+# Catgorise Age into groups
+AgeGroups <- cut(LungCapData$Age,
+                 breaks = c(0, 13, 15, 17, 25),
+                 labels = c("<13", "14/15", "16/17", ">=18"))
+head(LungCapData)
+# BoxPlot 1
+boxplot(LungCapData$LungCap~LungCapData$Smoke,
+        ylab = "Capacity",
+        main = "Lung Capacity of Smokers Vs Non-Smokers",
+        las = 1)
+# BoxPlot 2
+boxplot(LungCapData$LungCap[LungCapData$Age>=18]~LungCapData$Smoke[LungCapData
+                                                                   $Age>=18],
+        ylab = "Capacity",
+        main = "Lung Capacity of Smokers Vs Non-Smokers",
+        las = 1)
+# BoxPlot 3
+boxplot(LungCapData$LungCap~LungCapData$Smoke*AgeGroups,
+        ylab = "Capacity", xlab = "",
+        main = "Lung Capacity of Smokers Vs Non-Smokers",
+        col = c(4, 2), las = 2)
+
+```
+
 # DA LAB 10TH PROGRAM LINEAR REGRESSION 
 
 
