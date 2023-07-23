@@ -112,25 +112,23 @@ nrow(data_airquality)
 
 ```r
 
-data("iris") //Load the iris dataset
-str(iris) //Compactly displaying the internal structure of a dataset
-summary(iris) //The summary function returned descriptive statistics
-set.seed(111) // function sets the starting number used to generate a sequence of random numbers
+data("iris") 
+str(iris) 
+summary(iris) 
+set.seed(111) 
 ind <- sample(2, nrow(iris),
 replace = TRUE,
 prob = c(0.8, 0.2))
 training <- iris[ind==1,]
-testing <- iris[ind==2,] //sample() function allows to take a random sample of elements from a
-data-set
-library(psych) // Scatter Plot & Correlations
-// pairs.panels [in psych package] is used to create a scatter plot of matrices
+testing <- iris[ind==2,] 
+library(psych) 
 pairs.panels(training[,-5],
 gap = 0,
 bg = c("red", "yellow", "blue")[training$Species],
 pch=21)
 pc <- prcomp(training[,-5],
 center = TRUE,
-scale. = TRUE ) //# Principal Component Analysis
+scale. = TRUE ) # Principal Component Analysis
 attributes(pc)
 pc$center
 pc$scale
@@ -291,6 +289,87 @@ plotchar = FALSE,
 span = TRUE,
 main = "Cluster iris", xlab = 'Sepal.Length', ylab = 'Sepal.Width')
 
+
+```
+
+# DA LAB 8TH APRIORI
+
+
+```r
+
+# Load the 'arules' package
+library(arules)
+
+# Read the CSV file directly into the variable 'SupMarTra'
+SupMarTra <- read.csv("D:/New folder/supermarket3.csv", header = TRUE, colClasses = "factor")
+
+# Find the association rules with Apriori and set support and confidence (support = 0.5 and confidence = 0.8)
+rules <- apriori(SupMarTra, parameter = list(supp = 0.5, conf = 0.8))
+
+# Remove rules with length less than 2 or greater than 5, and remove rules with "NO" values
+rules <- apriori(SupMarTra, parameter = list(minlen = 2, maxlen = 5, supp = 0.5, conf = 0.8),
+                 appearance = list(none = c("I1=NO", "I2=NO", "I3=NO", "I4=NO", "I5=NO")))
+
+# Write the rules to a CSV file
+write(rules, file = "D:/data3.CSV", sep = ",")
+
+# Plot the graph
+library(arulesViz)
+plot(rules)
+plot(rules, method = "grouped")
+plot(rules, method = "graph", control = list(type = "items"))
+
+
+```
+
+# DA LAB 9TH KNN
+
+```r
+
+# Import required libraries and load the iris dataset
+require("class")
+require("datasets")
+data("iris")
+
+# Check the structure, summary, and the first few rows of the dataset
+str(iris)
+summary(iris)
+head(iris)
+
+# Set random seed and randomly sample row numbers
+set.seed(99)
+rnum <- sample(rep(1:150))
+
+# Rearrange the iris dataset based on the sampled row numbers
+iris <- iris[rnum,]
+head(iris)
+
+# Define a normalization function
+normalize <- function(x) {
+  return((x - min(x)) / (max(x) - min(x)))
+}
+
+# Apply normalization function to columns 1 to 4 of the iris dataset
+iris.new <- as.data.frame(lapply(iris[, c(1, 2, 3, 4)], normalize))
+head(iris.new)
+
+# Create the training dataset and the corresponding target variable
+iris.train <- iris.new[1:130,]
+iris.train.target <- iris[1:130, 5]
+
+# Create the test dataset and the corresponding target variable
+iris.test <- iris.new[131:150,]
+iris.test.train <- iris[131:150, 5]
+
+# View the summary of the normalized dataset
+summary(iris.new)
+
+# Use k-nearest neighbors with k=16 to create the model
+model1 <- knn(train = iris.train, test = iris.test, cl = iris.train.target, k = 16)
+model1
+
+# Create a confusion table
+table(iris.test.train, model1)
 
 ```
  
